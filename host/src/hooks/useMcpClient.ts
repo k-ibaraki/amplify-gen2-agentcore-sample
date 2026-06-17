@@ -63,6 +63,7 @@ export function useMcpClient() {
     connect();
     return () => {
       cancelled = true;
+      clientRef.current?.close().catch(() => {});
     };
   }, []);
 

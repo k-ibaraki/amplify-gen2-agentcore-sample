@@ -21,6 +21,20 @@ export async function loadAmplifyConfig(): Promise<ResourcesConfig> {
 
 const LOCAL_MCP_ENDPOINT = "http://localhost:8080/mcp";
 
+// Pure function — exported for testing.
+export function deriveEndpoint(
+  arn: string | undefined,
+  overrideUrl?: string,
+): { url: string; requiresAuth: boolean } {
+  if (overrideUrl) return { url: overrideUrl, requiresAuth: false };
+  if (!arn) return { url: LOCAL_MCP_ENDPOINT, requiresAuth: false };
+  const region = arn.split(":")[3];
+  return {
+    url: `https://bedrock-agentcore.${region}.amazonaws.com/runtimes/${encodeURIComponent(arn)}/invocations`,
+    requiresAuth: true,
+  };
+}
+
 // Derives the AgentCore Runtime endpoint from the deployed runtime ARN in
 // amplify_outputs.json. Falls back to the local MCP server when the backend
 // has not been deployed (e.g. during development).
@@ -28,12 +42,5 @@ const LOCAL_MCP_ENDPOINT = "http://localhost:8080/mcp";
 // even when amplify_outputs.json is present.
 export function getMcpEndpoint(): { url: string; requiresAuth: boolean } {
   const override = import.meta.env.VITE_MCP_ENDPOINT as string | undefined;
-  if (override) return { url: override, requiresAuth: false };
-  const arn = outputs.custom?.agentCoreRuntimeArn;
-  if (!arn) return { url: LOCAL_MCP_ENDPOINT, requiresAuth: false };
-  const region = arn.split(":")[3];
-  return {
-    url: `https://bedrock-agentcore.${region}.amazonaws.com/runtimes/${encodeURIComponent(arn)}/invocations`,
-    requiresAuth: true,
-  };
+  return deriveEndpoint(outputs.custom?.agentCoreRuntimeArn, override);
 }

@@ -42,4 +42,7 @@ export default defineConfig({
   },
   envDir: "..",
   server: { port: 5173 },
+  test: {
+    environment: "node",
+  },
 });

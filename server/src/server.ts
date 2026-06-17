@@ -40,7 +40,10 @@ function createServer(): McpServer {
 }
 
 const app = express();
-app.use(cors({ exposedHeaders: ["Mcp-Session-Id"] }));
+app.use(cors({
+  origin: process.env.CORS_ORIGIN ?? "http://localhost:5173",
+  exposedHeaders: ["Mcp-Session-Id"],
+}));
 app.use(express.json());
 
 app.post("/mcp", async (req, res) => {

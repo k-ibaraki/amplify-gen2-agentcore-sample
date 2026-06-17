@@ -32,7 +32,8 @@ export function ChatMessage({ role, text, isError }: Props) {
               ul: ({ children }) => <ul className="list-disc pl-5 mb-2 space-y-1">{children}</ul>,
               ol: ({ children }) => <ol className="list-decimal pl-5 mb-2 space-y-1">{children}</ol>,
               code: ({ children, className }) => {
-                const isBlock = className?.startsWith("language-");
+                const content = String(children);
+                const isBlock = !!className || content.includes("\n");
                 return isBlock ? (
                   <code className="block bg-gray-800 text-gray-100 rounded p-3 my-2 text-sm overflow-x-auto whitespace-pre">{children}</code>
                 ) : (
