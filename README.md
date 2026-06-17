@@ -145,7 +145,7 @@ Amplify Hosting のビルドが完了したら、アプリ URL（`https://main.{
 
 ## ローカル開発
 
-ローカルでは Amplify サンドボックスで Cognito を立ち上げ、MCP サーバーを直接 `localhost` で起動します。AgentCore Runtime を介さないため、ホットリロードが効く通常の Web 開発体験になります。
+ローカル開発では、認証用の Cognito を Amplify サンドボックスで AWS 上に立ち上げ、MCP サーバーは直接 `localhost` で起動します。AgentCore Runtime を介さないため、ホットリロードが効く通常の Web 開発体験になります。
 
 ### 手順
 
@@ -169,6 +169,8 @@ pnpm dev:server   # http://localhost:8080/mcp
 # 別ターミナル: フロントエンドを起動（MCP を localhost に向けるため env を指定）
 VITE_MCP_ENDPOINT=http://localhost:8080/mcp pnpm dev:host
 ```
+
+> **`pnpm sandbox` は AWS アカウント上にリソースを作成します。** 完全なローカル実行ではなく、`amplify/backend.ts` で定義したバックエンド（Cognito など）を、お使いの AWS アカウントに開発者ごとのサンドボックス環境としてデプロイします。事前に AWS 認証情報の設定が必要です。起動中はコード変更を検知して自動反映され、`Ctrl+C` で停止します。作成したリソースを完全に削除するには `npx ampx sandbox delete` を実行してください。
 
 > **`VITE_MCP_ENDPOINT`** を設定すると `amplify_outputs.json` の AgentCore エンドポイントを無視して指定先に接続します。Bearer トークンも付与されないため、ローカルサーバー側での認証設定は不要です。
 
