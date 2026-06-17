@@ -1,0 +1,25 @@
+{
+  "name": "amplify-gen2-agentcore-sample",
+  "private": true,
+  "engines": {
+    "node": ">=22.22.0"
+  },
+  "scripts": {
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "sandbox": "dotenv -e .env -- ampx sandbox",
+    "dev:server": "pnpm --filter server dev",
+    "dev:host": "pnpm --filter host dev"
+  },
+  "devDependencies": {
+    "@aws-amplify/backend": "^1.9.0",
+    "@aws-amplify/backend-cli": "^1.6.0",
+    "@biomejs/biome": "^2.4.14",
+    "@types/aws-lambda": "^8",
+    "@types/node": "^22.0.0",
+    "aws-cdk-lib": "^2.258.0",
+    "constructs": "^10.4.0",
+    "dotenv-cli": "^11.0.0",
+    "typescript": "^5.8.3"
+  }
+}

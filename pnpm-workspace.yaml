@@ -1,0 +1,7 @@
+packages:
+  - server
+  - host
+allowBuilds:
+  '@parcel/watcher': true
+  core-js: true
+  esbuild: true

@@ -1,0 +1,25 @@
+version: 1
+backend:
+  phases:
+    build:
+      commands:
+        # Backend is deployed via GitHub Actions (npx ampx pipeline-deploy).
+        # This phase only fetches the resulting amplify_outputs.json so the
+        # frontend build can read the deployed Cognito/AgentCore config.
+        - npm install -g pnpm
+        - pnpm install --frozen-lockfile
+        - npx ampx generate outputs --branch $AWS_BRANCH --app-id $AWS_APP_ID
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm install -g pnpm
+        - pnpm install --frozen-lockfile --filter ./host
+    build:
+      commands:
+        - (cd host && pnpm build)
+        - cp amplify_outputs.json host/dist/amplify_outputs.json
+  artifacts:
+    baseDirectory: host/dist
+    files:
+      - "**/*"
