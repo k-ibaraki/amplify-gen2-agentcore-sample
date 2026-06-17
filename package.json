@@ -20,6 +20,7 @@
     "aws-cdk-lib": "^2.258.0",
     "constructs": "^10.4.0",
     "dotenv-cli": "^11.0.0",
+    "esbuild": "^0.25.0",
     "typescript": "^5.8.3"
   }
 }
