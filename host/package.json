@@ -1,5 +1,5 @@
 {
-  "name": "sample-agent-host",
+  "name": "host",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
