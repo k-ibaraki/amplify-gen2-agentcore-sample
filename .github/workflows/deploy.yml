@@ -52,6 +52,7 @@ jobs:
         env:
           ALLOWED_EMAIL_DOMAIN: ${{ secrets.ALLOWED_EMAIL_DOMAIN }}
           AUTH_REDIRECT_URLS: https://main.${{ secrets.AMPLIFY_APP_ID }}.amplifyapp.com/
+          CORS_ORIGIN: https://main.${{ secrets.AMPLIFY_APP_ID }}.amplifyapp.com
         run: npx ampx pipeline-deploy --branch main --app-id ${{ secrets.AMPLIFY_APP_ID }}
 
       - name: Trigger Amplify frontend build

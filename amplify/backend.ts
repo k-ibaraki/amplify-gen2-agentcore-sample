@@ -66,6 +66,9 @@ const runtime = new Runtime(agentStack, "SampleAgentRuntime", {
   environmentVariables: {
     PORT: "8000",
     AWS_REGION: "ap-northeast-1",
+    // CORS_ORIGIN is injected at deploy time via the CI/CD environment variable.
+    // Omitting it here lets server.ts fall back to the localhost default for sandbox.
+    ...(process.env.CORS_ORIGIN ? { CORS_ORIGIN: process.env.CORS_ORIGIN } : {}),
   },
 });
 
